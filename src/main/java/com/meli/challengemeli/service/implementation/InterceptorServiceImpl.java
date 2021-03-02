@@ -1,10 +1,13 @@
 package com.meli.challengemeli.service.implementation;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 
 import com.meli.challengemeli.models.Coordenadas;
+import com.meli.challengemeli.models.ResponseMessage;
+import com.meli.challengemeli.models.Satelite;
 import com.meli.challengemeli.service.InterceptorService;
 import com.meli.challengemeli.transversal.exception.BusinessException;
 import com.meli.challengemeli.util.CompareUtil;
@@ -49,6 +52,23 @@ public class InterceptorServiceImpl implements InterceptorService {
 		}																
 		
 		return messageFinal;
+	}
+
+	@Override
+	public ResponseMessage validateMessage(List<Satelite> satelites) throws BusinessException {
+		
+		ResponseMessage response = new ResponseMessage();
+		
+		if(!ValidateUtil.existeSatelite(satelites)) {
+			throw new BusinessException("No todos los satelites ingresados estan en operación");
+		}
+		
+		List<List<String>> allMessages = new ArrayList<>();
+		satelites.stream().forEach(item -> allMessages.add(item.getMessage()));
+		
+		response.setMessage(getMessage(allMessages));
+		
+		return response;
 	}
 
 }

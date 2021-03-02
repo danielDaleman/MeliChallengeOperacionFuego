@@ -3,6 +3,8 @@ package com.meli.challengemeli.util;
 import java.util.List;
 import java.util.Optional;
 
+import com.meli.challengemeli.models.Satelite;
+
 public class ValidateUtil {
 	
 	private ValidateUtil() {
@@ -41,6 +43,12 @@ public class ValidateUtil {
 			}						
 		}								
 		return desfasaje;
+	}
+
+	public static boolean existeSatelite(List<Satelite> satelites) {				
+		
+		return satelites.stream().allMatch(satelite -> Satelites.SATELITES_EN_SERVICIO.get(satelite.getName().toLowerCase()) != null);						
+		
 	} 
 	
 }

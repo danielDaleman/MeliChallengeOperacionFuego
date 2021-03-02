@@ -1,11 +1,13 @@
 package com.meli.challengemeli.models;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class Coordenadas {
+@AllArgsConstructor
+public class Coordenadas {	
 	
 	private float x;
 	private float y;

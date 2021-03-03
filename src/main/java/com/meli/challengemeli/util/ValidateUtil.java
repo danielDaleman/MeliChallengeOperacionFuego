@@ -49,6 +49,10 @@ public class ValidateUtil {
 		
 		return satelites.stream().allMatch(satelite -> Satelites.SATELITES_EN_SERVICIO.get(satelite.getName().toLowerCase()) != null);						
 		
+	}
+
+	public static boolean existeSatelite(String satelliteName) {
+		return Satelites.SATELITES_EN_SERVICIO.get(satelliteName.toLowerCase())!=null?true:false;
 	} 
 	
 }

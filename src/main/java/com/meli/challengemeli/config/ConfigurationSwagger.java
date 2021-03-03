@@ -18,6 +18,6 @@ public class ConfigurationSwagger {
 				.apis(RequestHandlerSelectors.any())
 				// .paths(regex("/rest.*"))
 				.paths(PathSelectors.any()).build();
-	}
+	}	
 	
 }

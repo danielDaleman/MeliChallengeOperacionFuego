@@ -1,5 +1,7 @@
 package com.meli.challengemeli.controller;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +10,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -37,11 +41,11 @@ public class InterceptorSplitController {
 	private InterceptorSplitService interceptorSplitService;
 	
 	@ApiOperation(value = "Carga la información especifica de un satelite")
-	@PostMapping(path = "/{satellite_name}",consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)		
+	@PostMapping(path = "/{satelliteName}",consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)		
 	@ResponseStatus(HttpStatus.OK)
-	public void createPayCalendar(@RequestBody @Valid  SateliteSplit satelite) {		
+	public void cargarSatelite(@PathVariable String satelliteName, @RequestBody @Valid  SateliteSplit satelite) {		
 		try {
-			interceptorSplitService.addSatellite(satelite);
+			interceptorSplitService.addSatellite(satelite, satelliteName);
 		} catch (BusinessException e) {
 			log.error(e.getMessage());
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
@@ -52,11 +56,54 @@ public class InterceptorSplitController {
 	}
 	
 	@ApiOperation(value = "Carga la información especifica de un satelite")
-	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)		
-	@ResponseStatus(HttpStatus.OK)
-	public ResponseEntity<ResponseMessage> getMessage(@RequestBody @Valid  SateliteSplit satelite) {		
+	@GetMapping(path = "/generateMessage", produces = MediaType.APPLICATION_JSON_VALUE)	
+	public ResponseEntity<ResponseMessage> getMessage() {		
 		try {
 			return ResponseEntity.status(HttpStatus.OK).body(interceptorSplitService.getMessage());
+		} catch (BusinessException e) {
+			log.error(e.getMessage());
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+		} catch (Exception e) {
+			log.error(e.getMessage());
+			throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
+		}
+	}
+	
+	@ApiOperation(value = "Muestra todos los registros de satelites almacenados")
+	@GetMapping(path = "/findAll", produces = MediaType.APPLICATION_JSON_VALUE)	
+	public ResponseEntity<List<SateliteSplit>> findAll() {		
+		try {
+			return ResponseEntity.status(HttpStatus.OK).body(interceptorSplitService.findAll());
+		} catch (BusinessException e) {
+			log.error(e.getMessage());
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+		} catch (Exception e) {
+			log.error(e.getMessage());
+			throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
+		}
+	}
+	
+	@ApiOperation(value = "Elimina todos los satelites creados")
+	@DeleteMapping(path="/deleteAll", produces = MediaType.APPLICATION_JSON_VALUE)	
+	@ResponseStatus(HttpStatus.OK)
+	public void deleteAll() {		
+		try {
+			interceptorSplitService.deleteAll();
+		} catch (BusinessException e) {
+			log.error(e.getMessage());
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+		} catch (Exception e) {
+			log.error(e.getMessage());
+			throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
+		}
+	}
+	
+	@ApiOperation(value = "Elimina un satelite por nombre")
+	@DeleteMapping(path="/deleteByName/{name}", produces = MediaType.APPLICATION_JSON_VALUE)	
+	@ResponseStatus(HttpStatus.OK)
+	public void deleteByName(@PathVariable String name) {		
+		try {
+			interceptorSplitService.deletById(name);
 		} catch (BusinessException e) {
 			log.error(e.getMessage());
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());

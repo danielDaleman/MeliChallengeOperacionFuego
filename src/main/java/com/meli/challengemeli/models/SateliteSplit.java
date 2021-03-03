@@ -12,8 +12,9 @@ import lombok.Setter;
 @Setter
 public class SateliteSplit {
 	
+	private String name;
 	@NotNull(message = "La distancia es obligatoria")
-	private float distance;
+	private double distance;
 	@NotNull(message = "El mensaje interceptado es obligatorio")
 	@NotEmpty(message = "El mensaje no debe estar vacío")
 	private List<String> message;	

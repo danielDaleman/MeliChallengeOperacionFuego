@@ -11,22 +11,32 @@ import com.meli.challengemeli.models.Satelite;
 import com.meli.challengemeli.service.InterceptorService;
 import com.meli.challengemeli.transversal.exception.BusinessException;
 import com.meli.challengemeli.util.CompareUtil;
+import com.meli.challengemeli.util.Satelites;
+import com.meli.challengemeli.util.Trilateracion;
 import com.meli.challengemeli.util.ValidateUtil;
 
 @Service
 public class InterceptorServiceImpl implements InterceptorService {
 
-	@Override
-	public Coordenadas getLocation(float x, float y) throws BusinessException {
-
-		return null;
+	@Override	
+	public Coordenadas getLocation(List<Double> allDistance, List<String> satelites) throws BusinessException {
+		
+		if(allDistance.isEmpty() || allDistance.size() < 3 || allDistance.size() > 3) {
+			throw new BusinessException("Se debe contar con la información de los 3 Satelites.");
+		}		
+		
+		List<Coordenadas> coordenadas = new ArrayList<>();		
+		satelites.stream().forEach(item -> coordenadas.add(Satelites.SATELITES_EN_SERVICIO.get(item)));				
+		
+		return Trilateracion.findLocation(coordenadas,allDistance);			
+		
 	}
 
 	@Override
 	public String getMessage(List<List<String>> messages) throws BusinessException {					
 		
-		if(messages.isEmpty() || messages.size() == 1) {
-			throw new BusinessException("El tamaño como minimo de los mensajes interceptados debe ser de 2");
+		if(messages.isEmpty() || messages.size() < 3 || messages.size() > 3) {
+			throw new BusinessException("Se debe contar con la información de los 3 Satelites.");
 		}		
 		
 		var base = messages.get(0);
@@ -55,7 +65,7 @@ public class InterceptorServiceImpl implements InterceptorService {
 	}
 
 	@Override
-	public ResponseMessage validateMessage(List<Satelite> satelites) throws BusinessException {
+	public ResponseMessage validateInfo(List<Satelite> satelites) throws BusinessException {
 		
 		ResponseMessage response = new ResponseMessage();
 		
@@ -64,9 +74,15 @@ public class InterceptorServiceImpl implements InterceptorService {
 		}
 		
 		List<List<String>> allMessages = new ArrayList<>();
-		satelites.stream().forEach(item -> allMessages.add(item.getMessage()));
-		
-		response.setMessage(getMessage(allMessages));
+		List<Double> allDistance = new ArrayList<>();
+		List<String> satelitesName = new ArrayList<>();
+		satelites.stream().forEach(item -> {
+			allMessages.add(item.getMessage());
+			allDistance.add(item.getDistance());
+			satelitesName.add(item.getName());
+		});		
+		response.setMessage(getMessage(allMessages));	
+		response.setPosition(getLocation(allDistance,satelitesName));
 		
 		return response;
 	}

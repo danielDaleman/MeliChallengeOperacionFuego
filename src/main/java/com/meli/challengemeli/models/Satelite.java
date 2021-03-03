@@ -15,7 +15,7 @@ public class Satelite {
 	@NotNull(message = "El nombre del satelite es obligatorio")
 	private String name;
 	@NotNull(message = "La distancia es obligatoria")
-	private float distance;
+	private double distance;
 	@NotNull(message = "El mensaje interceptado es obligatorio")
 	@NotEmpty(message = "El mensaje no debe estar vacío")
 	private List<String> message;		

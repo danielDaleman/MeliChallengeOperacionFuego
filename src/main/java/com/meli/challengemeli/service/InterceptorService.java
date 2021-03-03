@@ -9,10 +9,10 @@ import com.meli.challengemeli.transversal.exception.BusinessException;
 
 public interface InterceptorService {
 	
-	Coordenadas getLocation(float x, float y) throws BusinessException;
+	Coordenadas getLocation(List<Double> allDistance,  List<String> satelites) throws BusinessException;
 	
 	String getMessage(List<List<String>> messages) throws BusinessException;
 
-	ResponseMessage validateMessage(List<Satelite> satelites) throws BusinessException;
+	ResponseMessage validateInfo(List<Satelite> satelites) throws BusinessException;
 	
 }

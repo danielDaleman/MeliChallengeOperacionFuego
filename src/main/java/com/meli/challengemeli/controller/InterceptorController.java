@@ -38,7 +38,7 @@ public class InterceptorController {
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)		
 	public ResponseEntity<ResponseMessage> createPayCalendar(@RequestBody @Valid  SateliteList satelites) {		
 		try {
-			return ResponseEntity.status(HttpStatus.OK).body(interceptorService.validateMessage(satelites.getSatellites()));
+			return ResponseEntity.status(HttpStatus.OK).body(interceptorService.validateInfo(satelites.getSatellites()));
 		} catch (BusinessException e) {
 			log.error(e.getMessage());
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());

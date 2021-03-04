@@ -21,21 +21,29 @@ import com.meli.challengemeli.transversal.exception.BusinessException;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import lombok.extern.slf4j.Slf4j;
 
 @RestController
 @EnableAutoConfiguration
 @CrossOrigin(origins = "*")
 @RequestMapping("/topsecret")
-@Api(tags = "topsecret", value = "/topsecret")
+@Api(tags = "topsecret", value = "API para identificar la posicion y mensaje de la nave emisora.")
 @Slf4j
 public class InterceptorController {
 	
 	@Autowired
 	private InterceptorService interceptorService;
 	
-	@ApiOperation(value = "Obtener la ubicación de la nave y el mensaje que emite")
+	@ApiOperation(value = "Calcula la ubicación de la nave y el mensaje que emite", response = ResponseMessage.class)
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)		
+	@ApiResponses(
+		      value = {
+		        @ApiResponse(code = 200, message = "Mensaje y posicion obtenidos correctamente", response = ResponseMessage.class),
+		        @ApiResponse(code = 400, message = "Error de negocio"),
+		        @ApiResponse(code = 500, message = "Error tecnico")
+		      })
 	public ResponseEntity<ResponseMessage> getMessage(@RequestBody @Valid  SateliteList satelites) {		
 		try {
 			return ResponseEntity.status(HttpStatus.OK).body(interceptorService.validateInfo(satelites.getSatellites()));

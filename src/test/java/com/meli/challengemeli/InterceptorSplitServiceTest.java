@@ -55,9 +55,14 @@ class InterceptorSplitServiceTest {
 	
 	@Test
 	void getMessageOk() {
-		messageSatelites.add(new MessageSatellite());				
+		messageSatelites.add(new MessageSatellite());
+		
+		Satellite satellite = new Satellite();
+		satellite.setNombre("kenobi");		
+		satelites.add(satellite);
+		
 		when(satelliteRepository.findAll()).thenReturn(satelites);
-		when(messageSatelliteRepository.findAll()).thenReturn(messageSatelites);		
+		when(messageSatelliteRepository.findAll()).thenReturn(messageSatelites);				
 		try {
 			when(messageService.getMessage(Mockito.anyList())).thenReturn("This is a message");
 			when(locationService.getLocation(Mockito.anyList(),Mockito.anyList())).thenReturn(new Coordenadas(100, 200));			
@@ -66,7 +71,7 @@ class InterceptorSplitServiceTest {
 		} catch (BusinessException e) {
 			assertTrue(false);
 		}
-		
+		 
 	}
 	
 	@Test

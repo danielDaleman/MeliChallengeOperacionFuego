@@ -1,6 +1,6 @@
 package com.meli.challengemeli;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
@@ -15,11 +15,8 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import com.meli.challengemeli.entitys.MessageSatellite;
 import com.meli.challengemeli.entitys.Satellite;
-import com.meli.challengemeli.models.Coordenadas;
 import com.meli.challengemeli.repository.SatelliteRepository;
-import com.meli.challengemeli.service.implementation.InterceptorSplitServiceImpl;
 import com.meli.challengemeli.service.implementation.LocationService;
 import com.meli.challengemeli.transversal.exception.BusinessException;
 

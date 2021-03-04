@@ -22,6 +22,9 @@ import org.springframework.web.server.ResponseStatusException;
 
 import com.meli.challengemeli.models.ResponseMessage;
 import com.meli.challengemeli.models.SateliteSplit;
+import com.meli.challengemeli.service.ICreateDetailSatellite;
+import com.meli.challengemeli.service.IDeleteDetailSatellite;
+import com.meli.challengemeli.service.IGetDetailSatellite;
 import com.meli.challengemeli.service.InterceptorSplitService;
 import com.meli.challengemeli.transversal.exception.BusinessException;
 
@@ -40,12 +43,21 @@ public class InterceptorSplitController {
 	@Autowired
 	private InterceptorSplitService interceptorSplitService;
 	
-	@ApiOperation(value = "Carga la información especifica de un satelite")
+	@Autowired 
+	private ICreateDetailSatellite createDetailSatellite;
+	
+	@Autowired 
+	private IGetDetailSatellite getDetailSatellite;
+	
+	@Autowired
+	private IDeleteDetailSatellite deleteDetailSatellite;
+	
+	@ApiOperation(value = "Carga el detalle del mensaje interceptado por el satelite")
 	@PostMapping(path = "/{satelliteName}",consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)		
 	@ResponseStatus(HttpStatus.OK)
-	public void cargarSatelite(@PathVariable String satelliteName, @RequestBody @Valid  SateliteSplit satelite) {		
+	public void uploadDetailSatelite(@PathVariable String satelliteName, @RequestBody @Valid  SateliteSplit satelite) {		
 		try {
-			interceptorSplitService.addSatellite(satelite, satelliteName);
+			createDetailSatellite.addDetailSatellite(satelite, satelliteName);
 		} catch (BusinessException e) {
 			log.error(e.getMessage());
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
@@ -69,11 +81,11 @@ public class InterceptorSplitController {
 		}
 	}
 	
-	@ApiOperation(value = "Muestra todos los registros de satelites almacenados")
+	@ApiOperation(value = "Muestra todos los registros de detalle de los satelites almacenados")
 	@GetMapping(path = "/findAll", produces = MediaType.APPLICATION_JSON_VALUE)	
 	public ResponseEntity<List<SateliteSplit>> findAll() {		
 		try {
-			return ResponseEntity.status(HttpStatus.OK).body(interceptorSplitService.findAll());
+			return ResponseEntity.status(HttpStatus.OK).body(getDetailSatellite.findAll());
 		} catch (BusinessException e) {
 			log.error(e.getMessage());
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
@@ -83,12 +95,12 @@ public class InterceptorSplitController {
 		}
 	}
 	
-	@ApiOperation(value = "Elimina todos los satelites creados")
-	@DeleteMapping(path="/deleteAll", produces = MediaType.APPLICATION_JSON_VALUE)	
+	@ApiOperation(value = "Elimina todos los detalles de los satelites (distancia y mensajes)")
+	@DeleteMapping(path="/deleteAllDetaill", produces = MediaType.APPLICATION_JSON_VALUE)	
 	@ResponseStatus(HttpStatus.OK)
-	public void deleteAll() {		
+	public void deleteAllDetail() {		
 		try {
-			interceptorSplitService.deleteAll();
+			deleteDetailSatellite.deleteAll();
 		} catch (BusinessException e) {
 			log.error(e.getMessage());
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
@@ -98,12 +110,12 @@ public class InterceptorSplitController {
 		}
 	}
 	
-	@ApiOperation(value = "Elimina un satelite por nombre")
+	@ApiOperation(value = "Elimina el detalle de un satelite por nombre")
 	@DeleteMapping(path="/deleteByName/{name}", produces = MediaType.APPLICATION_JSON_VALUE)	
 	@ResponseStatus(HttpStatus.OK)
 	public void deleteByName(@PathVariable String name) {		
 		try {
-			interceptorSplitService.deletById(name);
+			deleteDetailSatellite.deletByName(name);
 		} catch (BusinessException e) {
 			log.error(e.getMessage());
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());

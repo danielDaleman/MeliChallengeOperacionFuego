@@ -2,6 +2,7 @@ package com.meli.challengemeli.service.implementation;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.meli.challengemeli.service.IMessageService;
@@ -12,11 +13,17 @@ import com.meli.challengemeli.util.ValidateUtil;
 @Service
 public class MessageService implements IMessageService {
 	
+	@Value("${message.error.infoIncompleta}")
+	private String infoIncompleta;
+	
+	@Value("${message.error.noDecifrar}")
+	private String noDecifrar;
+	
 	@Override
 	public String getMessage(List<List<String>> messages) throws BusinessException {					
 		
 		if(messages.isEmpty() || messages.size() < 3 || messages.size() > 3) {
-			throw new BusinessException("Se debe contar con la información de los 3 Satelites.");
+			throw new BusinessException(infoIncompleta);
 		}		
 		
 		var base = messages.get(0);
@@ -38,7 +45,7 @@ public class MessageService implements IMessageService {
 		String messageFinal = ValidateUtil.validateMessage(base,messages);
 		
 		if(messageFinal.equals("")) {
-			throw new BusinessException("No se pudo decifrar el mensaje, falta informacion");
+			throw new BusinessException(noDecifrar);
 		}																
 		
 		return messageFinal;

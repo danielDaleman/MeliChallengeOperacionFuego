@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.meli.challengemeli.models.SateliteSplit;
@@ -21,6 +22,9 @@ public class GetDetailSatellite implements IGetDetailSatellite{
 	@Autowired 
 	private MessageSatelliteRepository messageSatelliteRepository;
 	
+	@Value("${message.info.sinOperacion}")
+	private String sinOperacion;
+	
 	@Override
 	public List<SateliteSplit> findAll() throws BusinessException {
 		
@@ -29,7 +33,7 @@ public class GetDetailSatellite implements IGetDetailSatellite{
 		var satellites = satelliteRepository.findAll();
 		
 		if(satellites.isEmpty()) {
-			throw new BusinessException("No hay satelites en operación");
+			throw new BusinessException(sinOperacion);
 		}
 		
 		satellites.stream().forEach(item ->{

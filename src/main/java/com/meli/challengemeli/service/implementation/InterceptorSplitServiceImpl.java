@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.meli.challengemeli.models.ResponseMessage;
@@ -28,7 +29,10 @@ public class InterceptorSplitServiceImpl implements InterceptorSplitService{
 	
 	@Autowired 
 	private MessageSatelliteRepository messageSatelliteRepository;		
-
+	
+	@Value("${message.error.infoIncompleta}")
+	private String infoIncompleta;
+	
 	@Override
 	public ResponseMessage getMessage() throws BusinessException {				
 		
@@ -37,7 +41,7 @@ public class InterceptorSplitServiceImpl implements InterceptorSplitService{
 		var details = messageSatelliteRepository.findAll();				
 		
 		if(details.isEmpty()) {
-			throw new BusinessException("No se cuenta con la información necesaria, valide que se cuente con la información de los 3 satelites");
+			throw new BusinessException(infoIncompleta);
 		}			
 		
 		ResponseMessage response = new ResponseMessage();

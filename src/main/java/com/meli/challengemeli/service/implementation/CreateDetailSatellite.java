@@ -1,6 +1,7 @@
 package com.meli.challengemeli.service.implementation;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,6 +21,11 @@ public class CreateDetailSatellite implements ICreateDetailSatellite {
 	@Autowired 
 	private MessageSatelliteRepository messageSatelliteRepository;
 	
+	@Value("${message.error.enOperacion}")
+	private String enOperacion;
+	
+	@Value("${message.error.infoCompleta}")
+	private String infoCompleta;
 	
 	@Override
 	@Transactional(rollbackFor = BusinessException.class)
@@ -28,13 +34,13 @@ public class CreateDetailSatellite implements ICreateDetailSatellite {
 		var satellite = satelliteRepository.findById(satelliteName.toLowerCase());
 		
 		if(!satellite.isPresent()) {
-			throw new BusinessException("El satelite ingresado no esta en operación");
+			throw new BusinessException(enOperacion);
 		}		
 		
 		var validate = messageSatelliteRepository.findByIdSatellite(satellite.get());
 		
 		if(!validate.isEmpty()) {
-			throw new BusinessException("El satelite ya cuenta con la información del mensaje");
+			throw new BusinessException(infoCompleta);
 		}
 		
 		satellite.get().setDistance(satelite.getDistance());

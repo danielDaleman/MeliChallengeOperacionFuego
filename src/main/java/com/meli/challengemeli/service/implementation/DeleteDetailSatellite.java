@@ -1,6 +1,7 @@
 package com.meli.challengemeli.service.implementation;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,13 +19,19 @@ public class DeleteDetailSatellite implements IDeleteDetailSatellite{
 	@Autowired 
 	private MessageSatelliteRepository messageSatelliteRepository;
 	
+	@Value("${message.error.enOperacion}")
+	private String enOperacion;
+	
+	@Value("${message.info.sinOperacion}")
+	private String sinOperacion;
+	
 	@Transactional
 	@Override
 	public void deleteAll() throws BusinessException {
 		
 		var satellites = satelliteRepository.findAll();
 		if(satellites.isEmpty()) {
-			throw new BusinessException("No hay información por borrar");
+			throw new BusinessException(sinOperacion);
 		}		
 		
 		satellites.stream().forEach(item -> {
@@ -42,7 +49,7 @@ public class DeleteDetailSatellite implements IDeleteDetailSatellite{
 		var satelite = satelliteRepository.findById(name);
 		
 		if(!satelite.isPresent()) {
-			throw new BusinessException("El satelite ingresado no existe");
+			throw new BusinessException(enOperacion);
 		}
 		
 		satelite.get().setDistance(0);		

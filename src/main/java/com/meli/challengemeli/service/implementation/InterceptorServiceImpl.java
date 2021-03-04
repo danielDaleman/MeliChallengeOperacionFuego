@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.meli.challengemeli.models.ResponseMessage;
@@ -26,13 +27,16 @@ public class InterceptorServiceImpl implements InterceptorService {
 	@Autowired
 	private SatelliteRepository satelliteRepository;
 	
+	@Value("${message.error.noOperacion}")
+	private String noOperacion;
+	
 	@Override
 	public ResponseMessage validateInfo(List<Satelite> satelites) throws BusinessException {
 		
 		ResponseMessage response = new ResponseMessage();				
 		
 		if(!validateSatellite(satelites)) {
-			throw new BusinessException("No todos los satelites ingresados estan en operación");
+			throw new BusinessException(noOperacion);
 		}		
 		
 		List<List<String>> allMessages = new ArrayList<>();

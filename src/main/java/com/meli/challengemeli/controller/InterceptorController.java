@@ -36,7 +36,7 @@ public class InterceptorController {
 	
 	@ApiOperation(value = "Obtener la ubicación de la nave y el mensaje que emite")
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)		
-	public ResponseEntity<ResponseMessage> createPayCalendar(@RequestBody @Valid  SateliteList satelites) {		
+	public ResponseEntity<ResponseMessage> getMessage(@RequestBody @Valid  SateliteList satelites) {		
 		try {
 			return ResponseEntity.status(HttpStatus.OK).body(interceptorService.validateInfo(satelites.getSatellites()));
 		} catch (BusinessException e) {

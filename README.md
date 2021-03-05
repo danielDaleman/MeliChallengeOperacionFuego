@@ -53,14 +53,18 @@ java -jar target/challengemeli-0.0.1-SNAPSHOT.jar
 
 ## Consumo de API
 
-Existe una configuración en postman, el cual le permitira realizar el consumo más facil, en el siguiente archivo: 
+Existe una configuración en postman, el cual le permitira realizar el consumo más facil, en el siguiente archivo: [archivo](https://github.com/danielDaleman/MeliChallengeOperacionFuego/tree/master/src/main/resources/postman), además cuenta con un archivo .txt, el cual tiene ejemplos para realizar la carga individual de los mensajes interceptados por satelite.
 
 **Nota:** 
 *El proyecto viene configurado con la url de heroku [https://melichallengeoperacionfuego.herokuapp.com/](), si desea usar la versión local basta con cambiarla por [http://localhost:8081/]()*
 
 ## Servidor de despliegue
 
-El proyecto se encuentra desplegado en HEROKU, el cual responde en [https://melichallengeoperacionfuego.herokuapp.com/]()
+El proyecto cuenta con integración continua con Circle CI, por lo que el despliegue al servidor es automatico, unos vez se suban cambios al repositorio y los test se ejecuten correctamente.
+
+El proyecto se encuentra desplegado en HEROKU, el cual responde en [https://melichallengeoperacionfuego.herokuapp.com/]().
+
+
 
 
 ## Documentación de Servicios:

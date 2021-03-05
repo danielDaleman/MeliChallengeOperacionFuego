@@ -1,0 +1,156 @@
+{
+	"info": {
+		"_postman_id": "8705e376-0a38-4374-8a5e-ea8b81b661db",
+		"name": "CHALLENGE-MELI",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "/topsecret",
+			"request": {
+				"auth": {
+					"type": "apikey"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"satellites\": [    \r\n    {\r\n    \"name\": \"skywalker\",\r\n    \"distance\": 115.5,\r\n    \"message\": [\"\", \"es\", \"\", \"\", \"secreto\"]\r\n    },\r\n    {\r\n    \"name\": \"sato\",\r\n    \"distance\": 142.7,\r\n    \"message\": [\"este\", \"\", \"un\", \"\", \"\"]\r\n    },\r\n    {\r\n    \"name\": \"kenobi\",\r\n    \"distance\": 100.0,\r\n    \"message\": [\"este\", \"\", \"\", \"mensaje\", \"\"]\r\n    }\r\n]\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://melichallengeoperacionfuego.herokuapp.com/topsecret",
+					"protocol": "https",
+					"host": [
+						"melichallengeoperacionfuego",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"topsecret"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/topsecret_split/{satelliteName}",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{    \r\n   \"distance\": 115.5,\r\n   \"message\": [\"\", \"es\", \"\", \"\", \"secreto\"]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://melichallengeoperacionfuego.herokuapp.com/topsecret_split/skywalker",
+					"protocol": "https",
+					"host": [
+						"melichallengeoperacionfuego",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"topsecret_split",
+						"skywalker"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/topsecret_split/generateMessage",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://melichallengeoperacionfuego.herokuapp.com/topsecret_split/generateMessage",
+					"protocol": "https",
+					"host": [
+						"melichallengeoperacionfuego",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"topsecret_split",
+						"generateMessage"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/topsecret_split/findAll",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://melichallengeoperacionfuego.herokuapp.com/topsecret_split/findAll",
+					"protocol": "https",
+					"host": [
+						"melichallengeoperacionfuego",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"topsecret_split",
+						"findAll"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/topsecret_split/deleteAllDetaill",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "https://melichallengeoperacionfuego.herokuapp.com/topsecret_split/deleteAllDetaill",
+					"protocol": "https",
+					"host": [
+						"melichallengeoperacionfuego",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"topsecret_split",
+						"deleteAllDetaill"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/topsecret_split/deleteByName/{SatelliteName}",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "https://melichallengeoperacionfuego.herokuapp.com/topsecret_split/deleteByName/sato",
+					"protocol": "https",
+					"host": [
+						"melichallengeoperacionfuego",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"topsecret_split",
+						"deleteByName",
+						"sato"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

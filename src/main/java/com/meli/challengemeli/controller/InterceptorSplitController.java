@@ -75,7 +75,7 @@ public class InterceptorSplitController {
 		}
 	}
 	
-	@ApiOperation(value = "Carga la información especifica de un satelite", response = ResponseMessage.class)
+	@ApiOperation(value = "Decifra la ubicacion y mensaje de la nave emisora", response = ResponseMessage.class)
 	@GetMapping(path = "/generateMessage", produces = MediaType.APPLICATION_JSON_VALUE)	
 	@ApiResponses(
 		      value = {

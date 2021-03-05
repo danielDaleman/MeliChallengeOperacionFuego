@@ -1,0 +1,33 @@
+Servicio: /topsecret_split/{satelliteName} -> Cargar en BD el detalle de cada satelite
+ 
+ satelliteName = skywalker
+	
+ Body:
+ 
+ {    
+   "distance": 115.5,
+   "message": ["", "es", "", "", "secreto"]
+ }
+
+ --------------------------------------------------------------
+ 
+ satelliteName = sato
+ 
+ Body:
+ 
+ {    
+   "distance": 142.7,
+   "message": ["este", "", "un", "", ""]
+ }
+ 
+ --------------------------------------------------------------
+ 
+ satelliteName = kenobi
+ 
+ Body:
+ 
+ {    
+   "distance": 100.0,
+   "message": ["este", "", "", "mensaje", ""]
+ }
+ 
